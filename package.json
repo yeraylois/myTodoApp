@@ -29,6 +29,9 @@
     "@capacitor/haptics": "6.0.0",
     "@capacitor/keyboard": "6.0.0",
     "@capacitor/status-bar": "6.0.0",
+    "@fortawesome/angular-fontawesome": "^0.14.1",
+    "@fortawesome/fontawesome-svg-core": "^6.5.2",
+    "@fortawesome/free-solid-svg-icons": "^6.5.2",
     "@ionic/angular": "^8.0.0",
     "@ionic/storage-angular": "^4.0.0",
     "cordova-sqlite-storage": "^6.1.0",
@@ -36,6 +39,7 @@
     "ionicons": "^7.0.0",
     "localforage": "^1.10.0",
     "rxjs": "~7.8.0",
+    "sql.js": "^1.10.3",
     "tslib": "^2.3.0",
     "zone.js": "~0.14.2"
   },

@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
-import { Firestore, collection, addDoc, doc, setDoc, getDoc, getDocs, deleteDoc, updateDoc } from '@angular/fire/firestore';
+import { Firestore, collection, addDoc, doc, getDoc, deleteDoc, updateDoc, collectionData, DocumentReference } from '@angular/fire/firestore';
 import { Task } from '../models/task.model';
+import { Observable, from } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -8,27 +10,35 @@ import { Task } from '../models/task.model';
 export class FirestoreService {
   constructor(private firestore: Firestore) {}
 
-  addTask(task: Omit<Task, 'id'>) {
+  addTask(task: Omit<Task, 'id'>): Promise<DocumentReference> {
     const taskCollection = collection(this.firestore, 'tasks');
-    return addDoc(taskCollection, task);
+    const taskWithDate = { ...task, date: new Date() }; // Añadir la fecha de creación
+    return addDoc(taskCollection, taskWithDate);
   }
 
-  getTask(id: string) {
+  getTask(id: string): Observable<Task> {
     const taskDoc = doc(this.firestore, `tasks/${id}`);
-    return getDoc(taskDoc);
+    return from(getDoc(taskDoc)).pipe(
+      map(doc => {
+        return {
+          id: doc.id,
+          ...doc.data()
+        } as Task;
+      })
+    );
   }
 
-  getTasks() {
+  getTasks(): Observable<Task[]> {
     const taskCollection = collection(this.firestore, 'tasks');
-    return getDocs(taskCollection);
+    return collectionData(taskCollection, { idField: 'id' }) as Observable<Task[]>;
   }
 
-  updateTask(id: string, task: Partial<Task>) {
+  updateTask(id: string, task: Partial<Task>): Promise<void> {
     const taskDoc = doc(this.firestore, `tasks/${id}`);
     return updateDoc(taskDoc, task);
   }
 
-  deleteTask(id: string) {
+  deleteTask(id: string): Promise<void> {
     const taskDoc = doc(this.firestore, `tasks/${id}`);
     return deleteDoc(taskDoc);
   }

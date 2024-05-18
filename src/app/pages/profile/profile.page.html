@@ -1,0 +1,35 @@
+<app-header></app-header>
+<ion-content id="main-content">
+  <div class="profile-container" *ngIf="profileData; else noData">
+    <div class="container2">
+      <div class="profile-header">
+        <p><strong>Nombre:</strong> {{ profileData.name }}</p>
+        <p><strong>Apellido:</strong> {{ profileData.lastName }}</p>
+        <p><strong>Email: </strong> <span style="text-transform: lowercase;">{{ profileData.email }}</span></p>
+      </div>
+      <div class="profile-content">
+        <div class="profile-image">
+          <img [src]="profileData.image" alt="Profile Image" class="profile-img">
+        </div>
+      </div>
+    </div>
+    <div class="container3">
+      <div class="profile-details">
+        <div *ngIf="!showDeleteConfirmation">
+          <ion-button color="danger" (click)="confirmDelete()">Delete Account</ion-button>
+        </div>
+        <div *ngIf="showDeleteConfirmation">
+          <p style="color: #333">Are you sure you want to delete your account? This action cannot be undone!</p>
+          <ion-button color="danger" (click)="deleteAccount()">Yes, delete my account</ion-button>
+          <ion-button (click)="cancelDelete()">Cancel</ion-button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <ng-template #noData>
+    <div class="loading-container">
+      <i class="fas fa-spinner fa-spin loading-icon"></i>
+      <p>Cargando datos del perfil...</p>
+    </div>
+  </ng-template>
+</ion-content>

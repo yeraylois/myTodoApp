@@ -1,0 +1,71 @@
+<app-header></app-header>
+<ion-content>
+  <div class="container">
+    <input type="checkbox" id="check">
+    <div class="login form">
+      <header>Login</header>
+      <form [formGroup]="loginForm" (ngSubmit)="loginUser()">
+        <ion-item>
+          <ion-label position="floating">Email</ion-label>
+          <ion-input formControlName="email" type="email"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="floating">Contraseña</ion-label>
+          <ion-input formControlName="password" type="password"></ion-input>
+        </ion-item>
+        <ion-button expand="full" type="submit">Iniciar Sesión</ion-button>
+        <div *ngIf="loginErrorMessage" class="error-message">{{ loginErrorMessage }}</div>
+      </form>
+      <div class="signup">
+        <span class="signup">Don't have an account?
+          <label for="check">Signup</label>
+        </span>
+      </div>
+    </div>
+    <div class="registration form">
+      <header>Signup</header>
+      <form [formGroup]="registerForm" (ngSubmit)="registerUser()">
+        <ion-item>
+          <ion-label position="floating">Nombre</ion-label>
+          <ion-input formControlName="name"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="floating">Apellidos</ion-label>
+          <ion-input formControlName="lastName"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="floating">Email</ion-label>
+          <ion-input formControlName="email" type="email"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="floating">Contraseña</ion-label>
+          <ion-input formControlName="password" type="password"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="floating">Confirmar Contraseña</ion-label>
+          <ion-input formControlName="confirmPassword" type="password"></ion-input>
+        </ion-item>
+        <h1>Subir foto de perfil</h1>
+        <div class="container2">
+          <ion-item>
+            <div class="file-upload-wrapper" [class.has-file]="fileName">
+              <input type="file" (change)="onFileSelected($event)">
+              <div class="file-upload-button" *ngIf="!fileName">Seleccionar archivo</div>
+              <div class="file-actions" *ngIf="fileName">
+                <div class="file-name"><span>{{ fileName }}</span></div>
+                <div class="change-file-button" (click)="changeFile()">Cambiar</div>
+              </div>
+            </div>
+          </ion-item>
+        </div>
+        <ion-button expand="full" type="submit">Registrarse</ion-button>
+        <div *ngIf="registerErrorMessage" class="error-message">{{ registerErrorMessage }}</div>
+      </form>
+      <div class="signup">
+        <span class="signup">Already have an account?
+          <label for="check">Login</label>
+        </span>
+      </div>
+    </div>
+  </div>
+</ion-content>

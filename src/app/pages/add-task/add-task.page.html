@@ -1,0 +1,34 @@
+<app-header></app-header>
+<ion-content id="main-content">
+  <div class="container">
+    <form [formGroup]="taskForm" (ngSubmit)="addTask()" class="form">
+      <ion-item>
+        <ion-label position="floating">Nombre</ion-label>
+        <ion-input formControlName="name"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Descripción</ion-label>
+        <ion-input formControlName="description"></ion-input>
+      </ion-item>
+      <ion-item class="custom-favorite-item">
+        <ion-label>Favorito</ion-label>
+        <ion-checkbox formControlName="isFavorite"></ion-checkbox>
+      </ion-item>
+      <h1>Imagen</h1>
+      <ion-item>
+        <div class="file-upload-wrapper" [class.has-file]="fileName">
+          <input type="file" (change)="onFileSelected($event)">
+          <div class="file-upload-button" *ngIf="!fileName">Seleccionar archivo</div>
+          <div class="file-actions" *ngIf="fileName">
+            <div class="file-name"><span>{{ fileName }}</span></div>
+            <div class="change-file-button" (click)="changeFile()">Cambiar</div>
+          </div>
+        </div>
+      </ion-item>
+      <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
+      <div class="button-container">
+        <ion-button expand="full" type="submit" class="custom-button" [disabled]="taskForm.invalid || !selectedFile">Añadir Tarea</ion-button>
+      </div>
+    </form>
+  </div>
+</ion-content>

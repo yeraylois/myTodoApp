@@ -1,0 +1,21 @@
+<app-header></app-header>
+<ion-content id="main-content">
+  <ion-button (click)="toggleSortOrder()" class="sort">
+    <fa-icon [icon]="sortAscending ? faSortUp : faSortDown"></fa-icon>
+{{ sortAscending ? 'Más antiguos primero' : 'Más recientes primero'}}
+  </ion-button>
+  <ion-list>
+    <ion-item *ngFor="let task of tasks" [routerLink]="['/detail', task.id]">
+      <ion-label>
+        <h2>{{ task.name }}</h2>
+        <p>{{ task.description }}</p>
+        <p>{{ task.date | date:'short' }}</p>
+      </ion-label>
+      <ion-icon [name]="task.isFavorite ? 'star' : 'star-outline'"
+                [style.color]="task.isFavorite ? '#fdd700' : 'inherit'"
+                slot="end"
+                (click)="toggleFavorite(task, $event)">
+      </ion-icon>
+    </ion-item>
+  </ion-list>
+</ion-content>

@@ -1,0 +1,61 @@
+ion-content {
+  padding: 16px;
+  --ion-border-color: transparent;
+}
+
+fa-icon {
+  margin-right: 10px;
+}
+
+ion-button{
+  display: block;
+  width: 40%;
+  margin: 0 auto;
+  --background: #ffd700;
+  --color: #333;
+}
+
+ion-list {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+
+ion-item {
+  --ion-background-color: white;
+  border-radius: 8px;
+  margin: 10px 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+  &:hover {
+    --background: #f0f0f0; /* Cambia el color de fondo al pasar el ratón por encima */
+    transform: translateY(-2px); /* Eleva ligeramente el item */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Aumenta la sombra */
+  }
+}
+
+ion-label {
+  display: block;
+  padding: 16px;
+  cursor: pointer; /* Cambia el cursor al pasar el ratón por encima */
+}
+
+ion-label h2 {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: bold;
+  color: var(--ion-text-color);
+}
+
+ion-label p {
+  margin: 5px 0 0;
+  font-size: 1rem;
+  color: #666;
+}
+
+ion-icon {
+  font-size: 24px;
+  margin-left: 10px;
+  cursor: pointer; /* Cambia el cursor al pasar el ratón por encima */
+}

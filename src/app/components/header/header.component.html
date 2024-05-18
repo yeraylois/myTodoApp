@@ -1,0 +1,27 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>{{ title }}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="openMenu()">
+        <img src="assets/usuario.png" alt="Usuario" class="user-icon">
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-menu side="end" menuId="user-menu" contentId="main-content">
+  <ion-header>
+    <ion-toolbar>
+      <ion-title>Menú del perfil</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content id="dropdown">
+    <ion-list>
+      <ion-item routerLink="/profile" routerDirection="root"><b>Perfil</b></ion-item>
+      <ion-item routerLink="/home" routerDirection="root"><b>Tus Tareas</b></ion-item>
+      <ion-item routerLink="/favorites" routerDirection="root"><b>Tareas Favoritas</b></ion-item>
+      <ion-item routerLink="/add-task" routerDirection="root"><b>Añadir Tarea</b></ion-item>
+      <ion-item (click)="logout()" routerLink="/login" routerDirection="root"><b>Logout</b></ion-item>
+    </ion-list>
+  </ion-content>
+</ion-menu>

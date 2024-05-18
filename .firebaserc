@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "sprint4-pwm": {
+      "hosting": {
+        "app": [
+          "sprint4-pwm"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "sprint4-pwm"
+  }
+}

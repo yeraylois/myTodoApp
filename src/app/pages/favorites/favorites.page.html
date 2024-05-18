@@ -1,0 +1,14 @@
+<app-header></app-header>
+<ion-content id="main-content">
+  <ion-list>
+    <ion-item *ngFor="let task of tasks" [ngClass]="{'favorite': task.isFavorite}">
+      <ion-label>
+        <h2>{{ task.name }}</h2>
+        <p>{{ task.description }}</p>
+      </ion-label>
+      <ion-button slot="end" (click)="toggleFavorite(task)">
+        <ion-icon [name]="task.isFavorite ? 'heart' : 'heart-outline'"></ion-icon>
+      </ion-button>
+    </ion-item>
+  </ion-list>
+</ion-content>

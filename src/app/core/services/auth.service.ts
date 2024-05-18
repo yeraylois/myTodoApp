@@ -1,8 +1,9 @@
-// src/app/core/services/auth.service.ts
-import { Injectable } from '@angular/core';
-import { Auth, signInWithEmailAndPassword, createUserWithEmailAndPassword, User } from '@angular/fire/auth';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { Injectable, NgZone } from '@angular/core';
+import { Auth, signInWithEmailAndPassword, createUserWithEmailAndPassword, User, onAuthStateChanged, deleteUser } from '@angular/fire/auth';
+import { Firestore, doc, getDoc, deleteDoc } from '@angular/fire/firestore';
+import { BehaviorSubject, Observable, from, of } from 'rxjs';
 import { Router } from '@angular/router';
+import { switchMap, catchError } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -10,17 +11,10 @@ import { Router } from '@angular/router';
 export class AuthService {
   private isAuthenticatedSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
-  constructor(private auth: Auth, private router: Router) {
-    this.auth.onAuthStateChanged((user: User | null) => {
+  constructor(private auth: Auth, private firestore: Firestore, private ngZone: NgZone) {
+    onAuthStateChanged(this.auth, (user: User | null) => {
       console.log('Auth state changed:', !!user);
       this.isAuthenticatedSubject.next(!!user);
-      if (!user) {
-        this.router.navigate(['/login']).then(() => {
-          console.log('User not authenticated, redirected to login');
-        }).catch(err => {
-          console.error('Navigation to login page failed', err);
-        });
-      }
     });
   }
 
@@ -48,11 +42,51 @@ export class AuthService {
     this.isAuthenticatedSubject.next(false);
   }
 
-  getCurrentUser() {
-    return this.auth.currentUser;
+  async getCurrentUser(): Promise<User | null> {
+    return new Promise((resolve) => {
+      onAuthStateChanged(this.auth, (user) => {
+        resolve(user);
+      });
+    });
   }
 
   isAuthenticated(): boolean {
     return !!this.auth.currentUser;
+  }
+
+  getProfileData(): Observable<any> {
+    return from(this.getCurrentUser()).pipe(
+      switchMap(user => {
+        if (user && user.uid) {
+          const userDoc = doc(this.firestore, `users/${user.uid}`);
+          return from(getDoc(userDoc)).pipe(
+            switchMap(docSnapshot => {
+              if (docSnapshot.exists()) {
+                return of(docSnapshot.data());
+              } else {
+                return of(null);
+              }
+            })
+          );
+        } else {
+          return of(null);
+        }
+      }),
+      catchError(error => {
+        console.error('Error fetching profile data', error);
+        throw error;
+      })
+    );
+  }
+
+  async deleteAccount() {
+    const user = this.auth.currentUser;
+    if (user) {
+      const userDoc = doc(this.firestore, `users/${user.uid}`);
+      await deleteDoc(userDoc);
+      await deleteUser(user);
+    } else {
+      throw new Error('No user is currently authenticated');
+    }
   }
 }
