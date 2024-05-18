@@ -1,0 +1,22 @@
+:host {
+  /** ESTO ES ESTRICTAMENTE NECESARIO PARA QUE CUALQUIER
+  COMPONENTE TOME EL 100% DEL CONTENDOR*/
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: beige;
+  z-index: 2;
+}
+
+body, html {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+}
