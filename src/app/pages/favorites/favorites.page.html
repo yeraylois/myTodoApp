@@ -1,14 +1,17 @@
 <app-header></app-header>
 <ion-content id="main-content">
   <ion-list>
-    <ion-item *ngFor="let task of tasks" [ngClass]="{'favorite': task.isFavorite}">
+    <ion-item *ngFor="let task of (favoriteTasks$ | async) || []">
       <ion-label>
         <h2>{{ task.name }}</h2>
         <p>{{ task.description }}</p>
+        <p>{{ task.date | date:'short' }}</p>
       </ion-label>
-      <ion-button slot="end" (click)="toggleFavorite(task)">
-        <ion-icon [name]="task.isFavorite ? 'heart' : 'heart-outline'"></ion-icon>
-      </ion-button>
+      <ion-icon [name]="task.isFavorite ? 'star-outline' : 'star'"
+                [style.color]="task.isFavorite ?'inherit' : '#fdd700' "
+                slot="end"
+                (click)="toggleFavorite(task, $event)">
+      </ion-icon>
     </ion-item>
   </ion-list>
 </ion-content>

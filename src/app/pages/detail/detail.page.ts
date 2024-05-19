@@ -1,8 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FirestoreService } from '../../core/services/firestore.service';
 import { Task } from '../../core/models/task.model';
-import { AuthService } from '../../core/services/auth.service';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -10,16 +9,16 @@ import { Subscription } from 'rxjs';
   templateUrl: './detail.page.html',
   styleUrls: ['./detail.page.scss'],
 })
-export class DetailPage implements OnInit {
+export class DetailPage implements OnInit, OnDestroy {
   task: Task | null = null;
   taskId!: string;
   private taskSubscription!: Subscription;
+  errorMessage: string | null = null;
 
   constructor(
     private route: ActivatedRoute,
     private firestoreService: FirestoreService,
-    private router: Router,
-    private authService: AuthService
+    private router: Router
   ) {}
 
   ngOnInit() {
@@ -56,6 +55,7 @@ export class DetailPage implements OnInit {
       await this.firestoreService.deleteTask(this.taskId);
       this.router.navigate(['/home']);
     } catch (error) {
+      this.errorMessage = 'Error deleting task';
       console.error('Error deleting task', error);
     }
   }

@@ -4,6 +4,7 @@ import { Task } from '../../core/models/task.model';
 import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { faSort, faSortUp, faSortDown } from '@fortawesome/free-solid-svg-icons';
+import { Timestamp } from '@angular/fire/firestore';
 
 @Component({
   selector: 'app-home',
@@ -46,7 +47,10 @@ export class HomePage implements OnInit, OnDestroy {
 
   loadTasks() {
     this.tasksSubscription = this.firestoreService.getTasks().subscribe(tasks => {
-      this.tasks = tasks;
+      this.tasks = tasks.map(task => ({
+        ...task,
+        date: task.date instanceof Timestamp ? task.date.toDate() : new Date(task.date)
+      }));
       this.sortTasks();
     }, error => {
       console.error('Error loading tasks', error);
@@ -69,14 +73,17 @@ export class HomePage implements OnInit, OnDestroy {
   async toggleFavorite(task: Task, event: Event) {
     event.stopPropagation(); // Evita que el click en el icono también dispare el routerLink
 
-    const updatedTask = { ...task, isFavorite: !task.isFavorite };
+    // Actualizar el estado localmente primero
+    task.isFavorite = !task.isFavorite;
+
     if (task.id != null) {
       try {
-        await this.firestoreService.updateTask(task.id, { isFavorite: updatedTask.isFavorite });
-        task.isFavorite = updatedTask.isFavorite;
+        await this.firestoreService.updateTask(task.id, { isFavorite: task.isFavorite });
         console.log('Task updated');
       } catch (error) {
         console.error('Error updating task', error);
+        // Si ocurre un error, revertir el estado local
+        task.isFavorite = !task.isFavorite;
       }
     }
   }

@@ -1,20 +1,17 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>{{ task?.name }}</ion-title>
-    <ion-buttons slot="end">
-      <ion-button (click)="deleteTask()">Eliminar</ion-button>
-    </ion-buttons>
-  </ion-toolbar>
-</ion-header>
-
-<ion-content *ngIf="task">
-  <ion-card>
-    <img [src]="task.image" *ngIf="task.image"/>
+<app-header></app-header>
+<ion-content id="main-content" >
+  <ion-card *ngIf="task">
+    <div class="image-container">
+      <img [src]="task.image" *ngIf="task.image"/>
+    </div>
+    <hr>
     <ion-card-header>
       <ion-card-title>{{ task.name }}</ion-card-title>
     </ion-card-header>
     <ion-card-content>
       <p>{{ task.description }}</p>
     </ion-card-content>
+    <ion-button (click)="deleteTask()">Eliminar</ion-button>
+    <p class="error-message" *ngIf="errorMessage">{{ errorMessage }}</p>
   </ion-card>
 </ion-content>

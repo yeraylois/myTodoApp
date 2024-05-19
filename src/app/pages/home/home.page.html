@@ -2,11 +2,11 @@
 <ion-content id="main-content">
   <ion-button (click)="toggleSortOrder()" class="sort">
     <fa-icon [icon]="sortAscending ? faSortUp : faSortDown"></fa-icon>
-{{ sortAscending ? 'Más antiguos primero' : 'Más recientes primero'}}
+    {{ sortAscending ? 'Más antiguos primero' : 'Más recientes primero'}}
   </ion-button>
   <ion-list>
-    <ion-item *ngFor="let task of tasks" [routerLink]="['/detail', task.id]">
-      <ion-label>
+    <ion-item *ngFor="let task of tasks">
+      <ion-label [routerLink]="['/detail', task.id]">
         <h2>{{ task.name }}</h2>
         <p>{{ task.description }}</p>
         <p>{{ task.date | date:'short' }}</p>

@@ -4,19 +4,26 @@
   "overrides": [
     {
       "files": ["*.ts"],
+      "parser": "@typescript-eslint/parser",
       "parserOptions": {
-        "project": ["tsconfig.json"],
+        "project": ["./tsconfig.json"],
         "createDefaultProgram": true
       },
+      "plugins": [
+        "@typescript-eslint"
+      ],
       "extends": [
+        "plugin:@typescript-eslint/recommended",
         "plugin:@angular-eslint/recommended",
         "plugin:@angular-eslint/template/process-inline-templates"
       ],
       "rules": {
-        "@angular-eslint/component-class-suffix": [
+        "@angular-eslint/directive-selector": [
           "error",
           {
-            "suffixes": ["Page", "Component"]
+            "type": "attribute",
+            "prefix": "app",
+            "style": "camelCase"
           }
         ],
         "@angular-eslint/component-selector": [
@@ -27,14 +34,17 @@
             "style": "kebab-case"
           }
         ],
-        "@angular-eslint/directive-selector": [
+        "@typescript-eslint/explicit-function-return-type": "off",
+        "@typescript-eslint/no-unused-vars": [
           "error",
           {
-            "type": "attribute",
-            "prefix": "app",
-            "style": "camelCase"
+            "vars": "all",
+            "args": "after-used",
+            "ignoreRestSiblings": false
           }
-        ]
+        ],
+        "quotes": ["error", "single"],
+        "semi": ["error", "always"]
       }
     },
     {
