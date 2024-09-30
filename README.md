@@ -1,7 +1,7 @@
-# MyTODOapp
-**MyTODOapp** is a basic task management application that helps you organize your daily activities in a simple and intuitive way. Built with Ionic and Angular, it provides a user-friendly interface to easily create, track, and complete your to-do list. The app is designed for both iOS and Android, leveraging cross-platform capabilities.
+# myTo-DoApp
+**myTo-DoApp** is a basic task management application that helps you organize your daily activities in a simple and intuitive way. Built with Ionic and Angular, it provides a user-friendly interface to easily create, track, and complete your to-do list. The app is designed for both iOS and Android, leveraging cross-platform capabilities.
 
-### Features of MyTODOapp
+### Features of myTo-DoApp
 - **Task Management:** Create, edit, mark as completed, and delete tasks seamlessly.
 - **Cloud Synchronization:** Integrates with Firebase to securely store your tasks and access them from anywhere.
 - **Cross-platform:** Developed using Ionic, ensuring a smooth experience on both Android and iOS devices.
@@ -46,7 +46,7 @@ Here’s a breakdown of the main directories and files included in this project:
 - **`webpack.config.js`**: Custom Webpack configuration used for the application’s build process.
 
 ### Installation and Setup
-To get started with **MyTODOapp**, follow these steps:
+To get started with **myTo-DoApp**, follow these steps:
 
 1. **Clone the repository:**
    ```bash
